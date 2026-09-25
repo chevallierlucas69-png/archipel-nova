@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <title>Saison Zéro — Carte 3D</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <section class="heading">
+      <div>
+        <p class="eyebrow">SAISON ZÉRO</p>
+        <h1>ARCHIPEL NOVA</h1>
+      </div>
+      <nav><button id="restart">ACCUEIL</button><button id="fullscreen">PLEIN ÉCRAN</button></nav>
+    </section>
+    <section class="game-shell">
+      <div id="game"></div>
+      <div id="lobby" class="lobby">
+        <div class="lobby-atmosphere" aria-hidden="true">
+          <i class="sky-glow"></i><i class="nova-island island-one"></i><i class="nova-island island-two"></i>
+          <i class="lobby-cloud cloud-one"></i><i class="lobby-cloud cloud-two"></i><i class="lobby-cloud cloud-three"></i>
+          <span class="light-particle p1"></span><span class="light-particle p2"></span><span class="light-particle p3"></span><span class="light-particle p4"></span><span class="light-particle p5"></span>
+        </div>
+        <nav class="lobby-nav"><div class="nav-brand"><strong>N</strong><span>ARCHIPEL<br><b>NOVA</b></span></div><div class="nav-tabs"><b class="nav-active"><i>▶</i> JOUER</b><button id="nav-shop"><i>✦</i> BOUTIQUE</button><button id="nav-locker"><i>♙</i> CASIER</button><button id="nav-quests"><i>◆</i> QUÊTES</button></div><div class="nav-season">SAISON <b>ZÉRO</b></div><div class="nav-wallet">✦ <span id="nav-credits">1 500</span></div><button id="open-account" class="nav-profile" aria-label="Mon compte">N<span></span></button></nav>
+        <aside class="news-card"><small>ACTUALITÉ</small><strong>L’ÉVEIL DE NOVA</strong><span>Une tempête inconnue transforme l’archipel.</span><div class="news-dots">● ○ ○</div></aside>
+        <div class="season-showcase">
+          <p>NOUVELLE SAISON</p>
+          <h2>L’ÉVEIL<br>DE NOVA</h2>
+          <span>Explore une île transformée, ouvre les coffres et survis à la tempête.</span>
+          <div class="season-tags"><b>CARTE ÉTENDUE</b><b>CONSTRUCTION</b><b>COMBAT SOLO</b></div>
+          <div class="daily-panel"><strong>DÉFIS DU JOUR</strong><span>Ouvrir 2 coffres <b>+250 XP</b></span><span>Éliminer 5 adversaires <b>+400 XP</b></span><span>Construire 10 structures <b>+300 XP</b></span></div>
+        </div>
+        <div class="lobby-card">
+          <div class="player-line"><div class="lobby-avatar">N</div><div class="player-data"><b>Éclaireur Nova</b><span>Prêt</span><small>NIVEAU 12</small><i><em></em></i></div><div class="lobby-currency">✦ <span id="lobby-credits">1 500</span></div></div>
+          <p class="lobby-season">CHOISIR UNE EXPÉRIENCE</p>
+          <div class="mode-cards"><button class="mode-card selected" data-mode="0"><b>SOLO NOVA</b><span>16 adversaires · Tempête active</span></button><button class="mode-card" data-mode="1"><b>ARÈNE NOVA</b><span>Défi construction · Objectif 15</span></button><button class="mode-card box-mode-card" data-mode="2"><b>BOX PVP</b><span>Combat rapproché · 15 éliminations</span></button></div>
+          <select id="mode" class="hidden"><option>Exploration solo</option><option>Construction libre</option><option>Box PVP</option></select>
+          <button id="play">JOUER</button>
+          <div class="lobby-actions"><button id="open-shop" class="secondary-button">BOUTIQUE</button><button id="open-settings" class="secondary-button">PARAMÈTRES</button></div>
+          <button id="daily-reward" class="reward-button">CADEAU QUOTIDIEN · +100 ✦</button>
+          <p id="online-status" class="lobby-note"><span class="online-dot"></span> Connexion à Nova Online…</p>
+        </div>
+      </div>
+      <div id="shop" class="shop hidden">
+        <div class="shop-panel">
+          <div class="shop-heading">
+            <div><p class="lobby-season">BOUTIQUE NOVA</p><h2>Apparences</h2><p class="shop-subtitle">Affirme ton style sur l’Archipel Nova.</p></div>
+            <div class="shop-heading-actions"><button id="open-gem-store" class="credits" title="Obtenir des Gemmes Nova"><i class="nova-gem" aria-hidden="true"></i><span id="credits">1 500</span><small>GEMMES · +</small></button><button id="shop-close-icon" class="shop-close" aria-label="Fermer la boutique"><i aria-hidden="true"></i></button></div>
+          </div>
+          <div class="shop-toolbar">
+            <div class="shop-tabs" role="tablist" aria-label="Filtres de la boutique"><button class="active" data-shop-filter="all">TOUT</button><button data-shop-filter="owned">MON CASIER</button><button data-shop-filter="available">À DÉBLOQUER</button></div>
+            <div class="collection-progress"><span id="shop-count">6 APPARENCES</span><i><em id="collection-fill"></em></i><b id="collection-count">1 / 6</b></div>
+          </div>
+          <div id="shop-items" class="shop-grid"></div>
+          <button id="close-shop" class="secondary-button">RETOUR AU LOBBY</button>
+          <p class="lobby-note shop-note">✦ Monnaie fictive locale · aucun achat avec de l’argent réel</p>
+          <div id="shop-toast" class="shop-toast" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+      <div id="gem-store" class="gem-store hidden" role="dialog" aria-modal="true" aria-labelledby="gem-store-title">
+        <div class="gem-store-panel">
+          <button id="close-gem-store" class="shop-close gem-store-close" aria-label="Fermer"><i aria-hidden="true"></i></button>
+          <div class="gem-store-heading"><p class="lobby-season">RÉSERVE NOVA</p><h2 id="gem-store-title">Gemmes Nova</h2><span>Choisis un pack pour compléter ta collection.</span><b>MODE DÉMO · AUCUN PAIEMENT RÉEL</b></div>
+          <div id="gem-packs" class="gem-packs"></div>
+          <div class="gem-security"><i>✓</i><span><b>Simulation locale sécurisée</b>Aucune carte bancaire, donnée personnelle ou transaction réelle.</span></div>
+        </div>
+      </div>
+      <div id="account-screen" class="account-screen hidden" role="dialog" aria-modal="true" aria-labelledby="account-title">
+        <div class="account-panel">
+          <section class="account-visual"><div class="account-logo">N</div><p>ARCHIPEL NOVA</p><h2>Rejoins la<br>nouvelle saison.</h2><span>Crée ton identité Nova et retrouve ton profil à chaque lancement.</span><div class="account-features"><b>✓ Profil local sécurisé</b><b>✓ Session pendant 7 jours</b><b>✓ Mot de passe haché</b></div></section>
+          <section class="account-form-area">
+            <button id="close-account" class="shop-close account-close" aria-label="Fermer"><i aria-hidden="true"></i></button>
+            <div id="auth-view">
+              <p class="lobby-season">COMPTE NOVA</p><h2 id="account-title">Connexion</h2><span id="auth-subtitle">Content de te revoir sur l’Archipel.</span>
+              <div class="auth-tabs"><button class="active" data-auth-mode="login">CONNEXION</button><button data-auth-mode="register">CRÉER UN COMPTE</button></div>
+              <form id="auth-form"><label for="auth-username">PSEUDO NOVA</label><div class="auth-input"><i>♙</i><input id="auth-username" name="username" autocomplete="username" minlength="3" maxlength="16" placeholder="Ton pseudo" required></div><label for="auth-password">MOT DE PASSE</label><div class="auth-input"><i>◆</i><input id="auth-password" name="password" type="password" autocomplete="current-password" minlength="8" maxlength="72" placeholder="8 caractères minimum" required><button id="toggle-password" type="button" aria-label="Afficher le mot de passe">ŒIL</button></div><p id="auth-error" class="auth-error"></p><button id="auth-submit" class="auth-submit" type="submit">SE CONNECTER</button></form>
+              <p class="auth-privacy">Compte enregistré uniquement sur ce serveur local.</p>
+            </div>
+            <div id="profile-view" class="profile-view hidden"><p class="lobby-season">PROFIL NOVA</p><div id="profile-avatar" class="profile-avatar">N</div><h2 id="profile-name">Joueur</h2><span>Compte local connecté</span><div class="profile-status"><i></i><b>EN LIGNE</b></div><button id="logout-account" class="logout-button">SE DÉCONNECTER</button></div>
+          </section>
+        </div>
+      </div>
+      <div id="settings" class="settings hidden">
+        <div class="settings-panel">
+          <div class="settings-title"><div><p class="lobby-season">CENTRE DE CONTRÔLE</p><h2>Paramètres</h2></div><span>Les changements sont sauvegardés automatiquement</span></div>
+          <div class="settings-grid">
+            <section class="settings-group"><h3>JOUABILITÉ</h3>
+              <div class="setting-row"><label for="sensitivity">Sensibilité <b id="sensitivity-value">1.0</b></label><input id="sensitivity" type="range" min="0.2" max="2.5" step="0.1" value="1"></div>
+              <div class="setting-row"><label for="headbob">Balancement caméra <b id="headbob-value">50%</b></label><input id="headbob" type="range" min="0" max="100" step="10" value="50"></div>
+              <div class="setting-row inline-setting"><label for="difficulty">Difficulté</label><select id="difficulty"><option value="easy">Facile</option><option value="normal" selected>Normale</option><option value="hard">Difficile</option></select></div>
+              <div class="setting-row"><label for="volume">Volume général <b id="volume-value">50%</b></label><input id="volume" type="range" min="0" max="100" step="5" value="50"></div>
+              <div class="setting-row inline-setting"><label for="show-hat">Afficher le chapeau</label><input id="show-hat" type="checkbox" checked></div>
+              <div class="setting-row inline-setting"><label for="show-weapon">Afficher les armes</label><input id="show-weapon" type="checkbox" checked></div>
+            </section>
+            <section class="settings-group"><h3>AFFICHAGE</h3>
+              <div class="setting-row"><label for="fov">Champ de vision <b id="fov-value">70°</b></label><input id="fov" type="range" min="60" max="100" step="1" value="70"></div>
+              <div class="setting-row inline-setting"><label for="quality">Qualité graphique</label><select id="quality"><option value="low">Basse</option><option value="medium">Moyenne</option><option value="high">Élevée</option><option value="realistic">Mode réaliste</option></select></div>
+              <div class="setting-row inline-setting"><label for="fps-limit">Limite de FPS</label><select id="fps-limit"><option value="30">30 FPS</option><option value="60" selected>60 FPS</option><option value="120">120 FPS</option><option value="0">Illimitée</option></select></div>
+              <div class="setting-row inline-setting"><label for="show-fps">Afficher les FPS</label><input id="show-fps" type="checkbox" checked></div>
+              <div class="setting-row inline-setting"><label for="show-help">Aide des commandes</label><input id="show-help" type="checkbox" checked></div>
+            </section>
+            <section class="settings-group keybind-section"><h3>COMMANDES DE CONSTRUCTION</h3><p>Clique sur une commande puis appuie sur une touche ou un bouton de souris.</p><div class="keybind-grid"><span>Mur</span><button class="keybind-button" data-bind="wall">SOURIS 4</button><span>Sol</span><button class="keybind-button" data-bind="floor">2</button><span>Rampe</span><button class="keybind-button" data-bind="ramp">SOURIS 5</button><span>Rotation</span><button class="keybind-button" data-bind="rotate">R</button></div></section>
+          </div>
+          <div class="settings-actions">
+            <button id="reset-settings" class="secondary-button">RÉINITIALISER</button>
+            <button id="close-settings">APPLIQUER ET RETOUR</button>
+          </div>
+        </div>
+      </div>
+      <div id="message" class="message hidden">Clique pour continuer</div>
+      <div class="hud">
+        <span id="location">Prairie du Départ</span>
+        <span>Zone sûre : <b id="zone">100%</b></span>
+        <span id="build-status">Construction : Mur · Matériaux : 500</span>
+      </div>
+      <div class="season-hud"><i>N</i><span>ARCHIPEL NOVA<small>SAISON Z&Eacute;RO</small></span></div>
+      <div id="arena-score" class="arena-score">
+        <div class="arena-goal"><i id="arena-goal-fill"></i><strong>OBJECTIF : <b id="arena-goal-value">0</b>/15</strong></div>
+        <div class="arena-teams"><span class="team-orange"><em id="arena-team-label">NOVA</em><b id="arena-team-score">0</b></span><span class="team-blue"><em id="arena-rival-label">STRUCTURES</em><b id="arena-build-score">0</b></span></div>
+      </div>
+      <div class="compass" aria-label="Boussole"><div id="compass-strip"><b>O</b><span>NO</span><b>N</b><span>NE</span><b>E</b><span>SE</span><b>S</b><span>SO</span><b>O</b></div><i></i></div>
+      <div id="combat-hud" class="combat-hud">
+        <div class="bars"><div class="shield-bar"><i id="shield-fill"></i><span id="shield-text">50</span></div><div class="health-bar"><i id="health-fill"></i><span id="health-text">100</span></div></div>
+        <div class="match-info"><span>Adversaires <b id="enemy-count">16</b></span><span>Éliminations <b id="eliminations">0</b></span></div>
+        <div class="ammo"><b id="ammo">30</b> / <span id="reserve-ammo">120</span></div>
+      </div>
+      <div id="inventory" class="inventory"></div>
+      <div id="arena-builds" class="arena-builds">
+        <button data-arena-build="wall"><kbd>1</kbd><i class="build-icon wall-icon"></i><span>MUR</span></button>
+        <button data-arena-build="floor"><kbd>2</kbd><i class="build-icon floor-icon"></i><span>SOL</span></button>
+        <button data-arena-build="ramp"><kbd>3</kbd><i class="build-icon ramp-icon"></i><span>RAMPE</span></button>
+        <button data-arena-build="cone"><kbd>6</kbd><i class="build-icon cone-icon"></i><span>CÔNE</span></button>
+      </div>
+      <div id="weapon-name" class="weapon-name">Fusil Nova · Rare</div>
+      <div id="quest-hud" class="quest-hud"><b>MISSION</b><span id="quest-text">Ouvre 2 coffres · 0/2</span><i><em id="quest-progress"></em></i></div>
+      <div id="interact" class="interact hidden">E · OUVRIR LE COFFRE</div>
+      <div id="drop-prompt" class="drop-prompt hidden">ESPACE · SAUTER DU BUS NOVA</div>
+      <div id="drop-stats" class="drop-stats hidden"><span>ALTITUDE <b id="altitude">0 m</b></span><span>VITESSE <b id="fall-speed">0</b></span></div>
+      <div class="minimap"><i id="map-player"></i><span>N</span><b id="map-zone"></b></div>
+      <div id="world-map" class="world-map hidden"><div class="world-map-card"><header><div><small>ARCHIPEL NOVA</small><b>CARTE TACTIQUE</b></div><span>M · FERMER</span></header><div class="world-map-image"><img src="assets/nova-island-map.png" alt="Carte de l’Archipel Nova"><i id="world-map-player"></i><b id="world-map-zone"></b></div><footer><span><i class="legend-player"></i> TOI</span><span><i class="legend-zone"></i> ZONE SÛRE</span></footer></div></div>
+      <div id="crosshair" class="crosshair">+</div>
+      <div id="hitmarker" class="hitmarker hidden">×</div>
+      <div id="damage-vignette" class="damage-vignette"></div>
+      <div id="reload-bar" class="reload-bar hidden"><span>RECHARGEMENT</span><i></i></div>
+      <div id="notice" class="notice hidden"></div>
+      <div id="match-stats" class="match-stats hidden"><h2 id="stats-title">VICTOIRE NOVA</h2><div><span>Éliminations <b id="stats-elims">0</b></span><span>Durée <b id="stats-time">0:00</b></span><span>XP gagnée <b id="stats-xp">0</b></span></div><button id="stats-lobby">RETOUR AU LOBBY</button></div>
+      <div id="pause-menu" class="pause-menu hidden"><h2>PAUSE</h2><button id="resume-game">REPRENDRE</button><button id="pause-settings">PARAMÈTRES</button><button id="leave-game">QUITTER LA PARTIE</button></div>
+      <div id="fps-counter" class="fps-counter">FPS : --</div>
+      <div class="build-help"><b>1</b> Mur &nbsp; <b>2</b> Sol &nbsp; <b>3</b> Rampe &nbsp; <b>R</b> Rotation &nbsp; <b>Clic</b> Construire</div>
+    </section>
+    <p class="help"><strong>ZQSD</strong> bouger · <strong>Espace</strong> sauter · <strong>M</strong> carte · <strong>4 / clic droit</strong> reprendre l’arme · <strong>Souris 4/5</strong> construire · <strong>Clic gauche</strong> tirer/placer.</p>
+  </main>
+  <script type="importmap">
+    { "imports": { "three": "./vendor/three.module.js" } }
+  </script>
+  <script type="module" src="game3d.js?v=20260718-online-v1"></script>
+</body>
+</html>
