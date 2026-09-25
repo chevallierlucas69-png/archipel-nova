@@ -1,0 +1,13 @@
+# Local accounts and sessions (never publish)
+.nova-data/
+
+# Local audits and browser profiles
+.audit/
+.audit-*/
+.chrome-audit/
+.chrome-goal-audit/
+.chrome-server-audit/
+
+# Dependencies and logs
+node_modules/
+*.log
